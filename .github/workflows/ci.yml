@@ -18,13 +18,13 @@ jobs:
         with:
           node-version: 16
           cache-dependency-path: './backend/package-lock.json'
-      - name: Create env file
-        with:
-          PORT=5000
-          TEST_MONGODB_URI=mongodb+srv://admin:admin@cluster0.53hsnfw.mongodb.net/testUser?retryWrites=true&w=majority
-          directory: ./backend
-          file_name: .env
-          fail_on_empty: false
+      - name: 'Create env file'
+        run: |
+          touch .env
+          echo PORT=5000 >> .env
+          echo TEST_MONGODB_URI=mongodb+srv://admin:admin@cluster0.53hsnfw.mongodb.net/testUser?retryWrites=true&w=majority >> .env
+          cat .env
+        working-directory: ./backend
       - run: npm ci
         working-directory: ./backend
       - run: npm run build --if-present
