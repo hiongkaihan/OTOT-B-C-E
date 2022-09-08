@@ -16,7 +16,8 @@ jobs:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: '12.x'
+          node-version: 16
+          cache-dependency-path: './backend/package-lock.json'
       - name: 'Create env file'
         run: |
           touch .env
