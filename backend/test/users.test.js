@@ -37,7 +37,7 @@ describe('GET Users test', () => {
         expect(response.body).toHaveLength(initialUsers.length)
     })
 })
-/*
+
 describe('POST Users test', () => {
 
     test('Succeeds with valid data', async () => {
@@ -91,7 +91,7 @@ describe('PUT Users test', () => {
         expect(usersAtEnd[0].email).toBe("timmy999@gmail.com")
     })
 })
-*/
+
 afterAll(() => {
     mongoose.connection.close()
 })
