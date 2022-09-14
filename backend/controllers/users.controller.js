@@ -11,6 +11,7 @@ module.exports.createUser = (req, res) => {
 
 module.exports.getUserById = (req, res) => {
     const { id } = req.params
+
     usersService
         .getUserById(id)
         .then((response) => {

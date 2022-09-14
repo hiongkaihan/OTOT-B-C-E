@@ -28,3 +28,8 @@ jobs:
       - run: npm ci
       - run: npm run build --if-present
       - run: npm test
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: 698bd207-4080-419d-9421-6beab9f12b63
+          heroku_app_name: otot-assignment
+          heroku_email: kaihanhiong@gmail.com
