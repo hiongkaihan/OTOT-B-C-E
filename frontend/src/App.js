@@ -17,6 +17,21 @@ function App() {
         event.preventDefault();
         const formData = new FormData(event.target);
         const userObject = Object.fromEntries(formData.entries());
+
+        if (users.some((user) => user.name === userObject.name)) {
+            const existingUser = users.find((user) => user.name === userObject.name)
+      
+            if (window.confirm(`${existingUser.name} has already added to the database, update user email?`)) {
+              userService
+                .updateUser(existingUser.userId, userObject)
+                .then(() => {
+                  setUsers(users.map(user => user.userId === existingUser.userId ? userObject : user))
+                })
+                event.target.reset();
+            }
+            return
+        }
+
         userService
             .addUser(userObject)
             .then(userObject => {
@@ -45,6 +60,8 @@ function App() {
 		<>
 			<Container>
 				<h1 className="text-primary mt-5 mb-5 p-3 text-center">User Database</h1>
+                <h2 className="text-primary">Add user to database</h2>
+                <p className="text-secondary">*Update user email by entering same name and new email</p>
                 <Form className="mb-5" onSubmit={addUser}>
                     <Form.Group className="mb-3 w-50" controlId="formBasicName">
                         <Form.Label>Name</Form.Label>
@@ -55,11 +72,11 @@ function App() {
                         <Form.Control type="email" name="email" placeholder="Enter email" />
                     </Form.Group>
                     <Button variant="primary" type="submit">
-                        Add to table
+                        Add user
                     </Button>
                 </Form>
                 <h3 className="text-primary">Searchbar</h3>
-                <InputGroup className="mb-5">
+                <InputGroup className="mb-3">
                     <Form.Control value={searchFilter} onChange={handleSearchChange} placeholder="Search user" aria-label="name" aria-describedby="basic-addon1"/>
                 </InputGroup>
                 <UserTable users={users} searchFilter={searchFilter} onClick={deletePerson}/>
