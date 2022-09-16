@@ -17,7 +17,7 @@ const UserTable = ({ users, searchFilter, onClick} ) => {
                             <td>{index+1}</td>
                             <td>{user.name}</td>
                             <td>{user.email}</td>
-                            <td><Button id={user.userId} onClick={onClick} variant="danger">Delete</Button></td>
+                            <td><Button id={user.userId} onClick={onClick} variant="primary">Delete</Button></td>
                         </tr>
                     )
                 })}

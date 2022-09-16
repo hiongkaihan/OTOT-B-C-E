@@ -1,16 +1,22 @@
 import { useState, useEffect } from 'react'
 import userService from './services/userService'
-import { Container, Form, Button, InputGroup } from 'react-bootstrap'
+import { Container, Form, Button, InputGroup, Navbar } from 'react-bootstrap'
 import UserTable from './components/UserTable'
+import temperatureService from './services/temperatureService'
 
 function App() {
     const [users, setUsers] = useState([])
     const [searchFilter, setSearchFilter] = useState('')
+    const [temperatureReading, setTemperatureReading] = useState('')
 
     useEffect(()=> {
         userService
-          .getAll()
-          .then(allUsers => setUsers(allUsers))
+            .getAll()
+            .then(allUsers => setUsers(allUsers))
+        
+        temperatureService
+            .getHottestAreaInSG()
+            .then(res => setTemperatureReading(res))
     },[])
 
     const addUser = (event) => {
@@ -57,7 +63,17 @@ function App() {
     }
 
 	return (
-		<>
+		<>  
+            <Navbar bg="dark">
+                <Container>
+                    <Navbar.Toggle />
+                    <Navbar.Collapse className="justify-content-end align-">
+                        <Navbar.Text className="text-light">
+                            <p className="mb-0">Hottest area in Singapore right now is <span className="text-warning">{temperatureReading.name} at {temperatureReading.value} degrees celsius.</span></p>
+                        </Navbar.Text>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
 			<Container>
 				<h1 className="text-primary mt-5 mb-5 p-3 text-center">User Database</h1>
                 <h2 className="text-primary">Add user to database</h2>
