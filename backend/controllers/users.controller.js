@@ -2,6 +2,9 @@ const usersService = require('../services/users.service')
 
 module.exports.createUser = (req, res) => {
     const { name, email } = req.body
+
+    if (!name || !email) return res.status(400).json({ message: "Missing name or email"})
+
     usersService.createUser(name, email).then((response) => {
         return res.status(201).json(response)
     }).catch((err) => {
@@ -45,6 +48,9 @@ module.exports.deleteUser = (req, res) => {
 module.exports.updateUser = (req, res) => {
     const { id } = req.params
     const { name, email } = req.body
+
+    if (!name || !email) return res.status(400).json({ message: "Missing name or email"})
+    
     usersService
         .updateUser(id, name, email)
         .then((response) => {
