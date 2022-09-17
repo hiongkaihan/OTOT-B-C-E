@@ -65,7 +65,7 @@ describe('DELETE Users test', () => {
 
         await api
             .delete(`/api/users/${userToDelete.userId}`)
-            .expect(204)
+            .expect(200)
 
         const usersAtEnd = await User.find({})
         expect(usersAtEnd).toHaveLength(initialUsers.length - 1)
