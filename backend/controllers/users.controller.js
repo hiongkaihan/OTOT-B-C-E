@@ -1,13 +1,15 @@
+const jwt = require('jsonwebtoken')
 const usersService = require('../services/users.service')
 
 module.exports.createUser = (req, res) => {
-    const { name, email } = req.body
+    const { name, email, role } = req.body
 
     if (!name || !email) return res.status(400).json({message: "Missing name or email"})
 
-    usersService.createUser(name, email).then((response) => {
+    usersService.createUser(name, email, role).then((response) => {
         return res.status(201).json(response)
     }).catch((err) => {
+        console.log(err)
         return res.status(500).json({ status: false, err })
     })
 }
@@ -47,15 +49,26 @@ module.exports.deleteUser = (req, res) => {
 
 module.exports.updateUser = (req, res) => {
     const { id } = req.params
-    const { name, email } = req.body
+    const { name, email, role} = req.body
 
     if (!name || !email) return res.status(400).json({message: "Missing name or email"})
     
     usersService
-        .updateUser(id, name, email)
+        .updateUser(id, name, email, role)
         .then((response) => {
             return res.status(200).json({message: "User has been updated"})
     }).catch((err) => {
         return res.status(500).json({ status: false, err })
     })
+}
+
+module.exports.login = (req, res) => {
+    const userToken = req.body
+
+    try {
+        token = jwt.sign(userToken, process.env.SECRET, {expiresIn: '20s'})
+        return res.status(200).json(token)
+    } catch(err) {
+        return res.status(500).json({ err })
+    }
 }

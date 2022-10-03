@@ -3,11 +3,12 @@ const helper = require ('../db/helper')
 require('../models/users.model')
 const model = mongoose.model('User')
 
-module.exports.createUser = async (name, email) => {
+module.exports.createUser = async (name, email, role) => {
     return new Promise((resolve, reject) => {
         helper.save(model, {
             name,
-            email
+            email,
+            role
         })
         .then((res) => {
             resolve(res)
@@ -48,9 +49,9 @@ module.exports.deleteUser = async (id) => {
     })
 }
 
-module.exports.updateUser = async (id, name, email) => {
+module.exports.updateUser = async (id, name, email, role) => {
     return new Promise((resolve, reject) => {
-        helper.update(model, { userId: id }, { name, email })
+        helper.update(model, { userId: id }, { name, email, role })
         .then((res) => {
             resolve(res)
         })
