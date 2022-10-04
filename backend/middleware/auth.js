@@ -3,10 +3,9 @@ const jwt = require('jsonwebtoken')
 module.exports.authenticateJwt = (req, res, next) => {
     try {
         const bearerToken = req.get('authorization');
-        console.log(bearerToken)
         // Check if token exists
         if (!bearerToken || !bearerToken.toLowerCase().startsWith('bearer ')) {
-            return res.status(401).send({message: "A token is required for authentication, please log in again!"});
+            return res.status(401).send({message: "A token is required for authentication!"});
         }
         const token = bearerToken.substring(7);
         // Check if token is valid
@@ -14,7 +13,7 @@ module.exports.authenticateJwt = (req, res, next) => {
         req.role = decodedToken.role;
         next();
     } catch (err) {
-        return res.status(401).send({message: "Token is invalid, please log in again!"});
+        return res.status(401).send({message: "Token is invalid!"});
     }
 }
 
