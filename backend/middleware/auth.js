@@ -22,7 +22,8 @@ module.exports.accessControl = (authorizedRoles) => {
     return (req, res, next) => {
         try {
             const role = req.role
-            const userAuthorized = (authorizedRoles.indexOf(role) > -1);
+            let userAuthorized = (authorizedRoles.indexOf(role) > -1);
+            if (authorizedRoles[0] === "*") userAuthorized = true;
             if (!userAuthorized) return res.status(403).send({message: "User is not authorized!"});
             next();
         } catch (err) {

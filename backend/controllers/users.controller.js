@@ -66,7 +66,7 @@ module.exports.login = (req, res) => {
     const userToken = req.body
 
     try {
-        token = jwt.sign(userToken, process.env.SECRET, {expiresIn: '20s'})
+        token = jwt.sign(userToken, process.env.SECRET, {expiresIn: '1h'})
         return res.status(200).json(token)
     } catch(err) {
         return res.status(500).json({ err })
