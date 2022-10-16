@@ -4,6 +4,7 @@ const controller = require('../controllers/users.controller')
 const { authenticateJwt, accessControl } = require('../middleware/auth')
 
 router.route('/').get(authenticateJwt, accessControl(['admin']), controller.getUsers)
+router.route('/data').get(controller.getData)
 router.route('/:id').get(controller.getUserById)
 router.route('/').post(controller.createUser)
 router.route('/:id').delete(controller.deleteUser)
